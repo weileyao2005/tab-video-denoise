@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制面板</title>
+    <link rel="stylesheet" href="control_panel.css">
+</head>
+<body>
+    <div class="header">
+        <span class="title">音频降噪对比</span>
+        <label class="switch">
+            <input type="checkbox" id="master-switch" aria-label="Master audio control switch">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="visualizer-wrapper">
+        <div class="viz-container">
+            <div class="viz-label">原始信号 (Input)</div>
+            <canvas id="canvas-top"></canvas>
+        </div>
+        <div class="viz-container">
+            <div class="viz-label">输出信号 (Output)</div>
+            <canvas id="canvas-bottom"></canvas>
+        </div>
+    </div>
+
+    <script src="noise_suppression.js"></script>
+    <script src="control_panel.js"></script>
+</body>
+</html>

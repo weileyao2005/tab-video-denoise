@@ -1,0 +1,111 @@
+body {
+    width: 380px;
+    height: 520px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    background-color: #f0f2f5;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dcdfe6;
+    flex-shrink: 0;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #303133;
+}
+
+.visualizer-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+}
+
+.viz-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.viz-label {
+    font-size: 12px;
+    color: #909399;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #001f3f; /* 深蓝色背景 */
+    border-radius: 4px;
+}
+
+/* 开关样式 */
+.switch { 
+    position: relative; 
+    display: inline-block; 
+    width: 50px; 
+    height: 28px; 
+}
+
+.switch input { 
+    opacity: 0; 
+    width: 0; 
+    height: 0; 
+}
+
+.slider { 
+    position: absolute; 
+    cursor: pointer; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background-color: #ccc; 
+    transition: .4s; 
+}
+
+.slider:before { 
+    position: absolute; 
+    content: ""; 
+    height: 20px; 
+    width: 20px; 
+    left: 4px; 
+    bottom: 4px; 
+    background-color: white; 
+    transition: .4s; 
+}
+
+input:checked + .slider { 
+    background-color: #409eff; 
+}
+
+input:checked + .slider:before { 
+    transform: translateX(22px); 
+}
+
+.slider.round { 
+    border-radius: 34px; 
+}
+
+.slider.round:before { 
+    border-radius: 50%; 
+}
