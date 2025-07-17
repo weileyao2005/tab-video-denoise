@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "音频控制面板 - RNNoise 降噪",
-  "version": "6.0",
+  "version": "1.2.3",
   "description": "通过一个可拖动的面板捕获并处理当前标签页的音频，提供实时人声降噪功能。",
   "permissions": [
     "tabs",
@@ -23,7 +23,10 @@
       "resources": [
         "noise_suppression.js",
         "rnnoise.wasm",
-        "rnnoise_simd.wasm"
+        "rnnoise_simd.wasm",
+        "wavelet.js",
+        "wavelet-processor.js",
+        "post-processor.js"
       ],
       "matches": [
         "<all_urls>"

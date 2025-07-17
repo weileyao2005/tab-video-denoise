@@ -3,29 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>控制面板</title>
+    <title>唐僧降噪</title>
     <link rel="stylesheet" href="control_panel.css">
 </head>
 <body>
     <div class="header">
-        <span class="title">音频降噪对比</span>
+        <span class="title">音频降噪</span>
         <label class="switch">
-            <input type="checkbox" id="master-switch" aria-label="Master audio control switch">
+            <input type="checkbox" id="master-switch">
             <span class="slider round"></span>
         </label>
     </div>
-
-    <div class="visualizer-wrapper">
-        <div class="viz-container">
-            <div class="viz-label">原始信号 (Input)</div>
-            <canvas id="canvas-top"></canvas>
+    <div class="control-row">
+        <span>小波阈值</span>
+        <input type="range" id="wavelet-threshold" min="0" max="0.5" step="0.01" value="0.1" title="调整小波降噪的强度">
+    </div>
+    <div class="control-group visualizer-group">
+        <div class="control-row">
+            <label for="azimuth-slider">方位角</label>
+            <input type="range" id="azimuth-slider" min="0" max="360" step="15" value="0">
+            <span class="value-display" id="azimuth-value">0°</span>
         </div>
-        <div class="viz-container">
-            <div class="viz-label">输出信号 (Output)</div>
-            <canvas id="canvas-bottom"></canvas>
+        <div class="visualizer-container">
+            <canvas id="combined-canvas"></canvas>
+            <div class="panner-visualizer">
+                <svg class="listener-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="35" r="18" />
+                    <path d="M 20 95 A 30 30 0 0 1 80 95" stroke-width="10" fill="none" stroke-linecap="round"/>
+                </svg>
+                <div id="panner-ball"></div>
+                <div class="panner-track"></div>
+            </div>
         </div>
     </div>
-
     <script src="noise_suppression.js"></script>
     <script src="control_panel.js"></script>
 </body>

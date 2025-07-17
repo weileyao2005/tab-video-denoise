@@ -1,13 +1,43 @@
+/* control_panel.css */
+
+/* 定义两种主题的颜色变量 */
+:root {
+    --bg-color: #f0f2f5;
+    --container-bg-color: #ffffff;
+    --header-border-color: #dcdfe6;
+    --primary-text-color: #606266;
+    --title-text-color: #303133;
+    --accent-color: #a9a9a9; /* 关闭时的灰色调 */
+    --accent-color-light: #cccccc;
+    --waveform-original-color: #999999;
+    --waveform-processed-color: #cccccc;
+    --track-color: #bbbbbb;
+    --transition-speed: 0.4s;
+}
+
+body.theme-on {
+    --accent-color: #409eff; /* 开启时的蓝色调 */
+    --accent-color-light: #79bbff;
+    /* 【修改】将波形颜色改为辉光管橙和示波器绿 */
+    --waveform-original-color: #ff8c00; /* 辉光管风格橙色 */
+    --waveform-processed-color: #32cd32; /* 电子管示波器绿色 */
+    --track-color: #888888;
+}
+
 body {
-    width: 380px;
-    height: 520px;
+    width: 366px;
+    /* 【修改】调整高度以确保所有内容可见，并允许内容决定高度 */
+    min-height: 400px; /* 设置一个最小高度 */
+    height: auto;
+    position: relative; /* 【新增】为绝对定位的子元素提供定位上下文 */
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     margin: 0;
-    background-color: #f0f2f5;
-    overflow: hidden;
+    background-color: var(--bg-color);
+    /* 【修改】移除 overflow: hidden 以防止内容被裁剪 */
     display: flex;
     flex-direction: column;
+    transition: background-color var(--transition-speed);
 }
 
 .header {
@@ -15,97 +45,164 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #dcdfe6;
+    background-color: var(--container-bg-color);
+    border-bottom: 1px solid var(--header-border-color);
     flex-shrink: 0;
 }
 
 .title {
     font-size: 16px;
     font-weight: 600;
-    color: #303133;
+    color: var(--title-text-color);
 }
 
-.visualizer-wrapper {
+.control-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--primary-text-color);
+}
+
+/* --- 开关样式 --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--accent-color-light);
+    transition: var(--transition-speed);
+    border-radius: 34px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: var(--transition-speed);
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+.control-group {
+    padding: 8px 0;
+    background-color: var(--container-bg-color);
+    border-bottom: 1px solid var(--header-border-color);
+}
+
+/* 【新增】为包含示波器的组设置透明背景 */
+.control-group.visualizer-group {
+    background-color: transparent;
+    border-bottom: none;
+    flex-grow: 1; /* 让它填充剩余空间 */
+    display: flex;
+    flex-direction: column;
+}
+
+.control-row input[type="range"] {
+    flex-grow: 1;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+.value-display {
+    width: 50px;
+    text-align: right;
+    font-size: 14px;
+    color: var(--title-text-color);
+    margin-left: 12px;
+}
+
+.visualizer-container {
+    position: relative;
+    padding: 12px 16px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    gap: 16px;
+    align-items: center;
 }
 
-.viz-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+#combined-canvas {
+    width: 100%;
+    height: 150px;
+    /* 【修改】移除背景色，使其透明 */
+    /* background-color: #001f3f; */
+    margin-bottom: 20px;
 }
 
-.viz-label {
-    font-size: 12px;
-    color: #909399;
-    margin-bottom: 4px;
-    text-align: center;
+.panner-visualizer {
+    position: relative;
+    width: 150px;
+    height: 150px;
 }
 
-canvas {
+.panner-track {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: #001f3f; /* 深蓝色背景 */
-    border-radius: 4px;
+    border: 2px dashed var(--track-color);
+    border-radius: 50%;
+    box-sizing: border-box;
+    transition: border-color var(--transition-speed);
 }
 
-/* 开关样式 */
-.switch { 
-    position: relative; 
-    display: inline-block; 
-    width: 50px; 
-    height: 28px; 
+/* 中心图标样式 */
+.listener-icon {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: var(--accent-color);
+    stroke: var(--accent-color);
+    transition: fill var(--transition-speed), stroke var(--transition-speed);
 }
 
-.switch input { 
-    opacity: 0; 
-    width: 0; 
-    height: 0; 
+#panner-ball {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    cursor: grab;
+    transform: translate(-50%, -50%);
+    transition: background-color var(--transition-speed);
+}
+#panner-ball.dragging {
+    cursor: grabbing;
 }
 
-.slider { 
-    position: absolute; 
-    cursor: pointer; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    bottom: 0; 
-    background-color: #ccc; 
-    transition: .4s; 
-}
-
-.slider:before { 
-    position: absolute; 
-    content: ""; 
-    height: 20px; 
-    width: 20px; 
-    left: 4px; 
-    bottom: 4px; 
-    background-color: white; 
-    transition: .4s; 
-}
-
-input:checked + .slider { 
-    background-color: #409eff; 
-}
-
-input:checked + .slider:before { 
-    transform: translateX(22px); 
-}
-
-.slider.round { 
-    border-radius: 34px; 
-}
-
-.slider.round:before { 
-    border-radius: 50%; 
+/* 【新增】右下角署名样式 */
+.brand-signature {
+    position: absolute;
+    bottom: 10px;
+    right: 16px;
+    font-size: 12px;
+    color: var(--primary-text-color);
+    user-select: none;
+    font-style: italic;
 }
